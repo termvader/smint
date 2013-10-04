@@ -51,11 +51,6 @@ If you like Smint, or have suggestions on how it could be improved, send me a tw
 					if (scrollTop >= optionLocs[curi].top) {
 						$smintItems.removeClass('active');
 						$('#' + optionLocs[curi].id).addClass('active');
-						// The foll. makes the page very slow.
-						/*if(optionLocs[curi].hash != null && optionLocs[curi].hash != lastHash) {
-							window.location.hash = optionLocs[curi].hash;
-							lastHash = optionLocs[curi].hash;
-						}*/
 						break;
 					}
 					curi--;
@@ -66,11 +61,6 @@ If you like Smint, or have suggestions on how it could be improved, send me a tw
 					if (scrollTop < optionLocs[curi].bottom) {
 						$smintItems.removeClass('active');
 						$('#' + optionLocs[curi].id).addClass('active');
-						// The foll. makes the page very slow.
-						/*if(optionLocs[curi].hash != null && optionLocs[curi].hash != lastHash) {
-							window.location.hash = optionLocs[curi].hash;
-							lastHash = optionLocs[curi].hash;
-						}*/
 						break;
 					}
 					curi++;
@@ -85,7 +75,7 @@ If you like Smint, or have suggestions on how it could be improved, send me a tw
 		};
 
 		// run function every time you scroll but not needed to be run for each of the $smintItems
-		$(window).scroll(function() {
+		$window.scroll(function() {
 			//Get the direction of scroll
 			var st = $(this).scrollTop(),
 				scrollingDown = (st > lastScrollTop);
@@ -94,7 +84,7 @@ If you like Smint, or have suggestions on how it could be improved, send me a tw
 
 			// Check if at bottom of page, if so, add class to last <a> as sometimes the last div
 			// isnt long enough to scroll to the top of the page and trigger the active state.
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+			if ($window.scrollTop() + $window.height() == $(document).height()) {
 				$smintItems.removeClass('active');
 				$smintItems.last().addClass('active');
 			}
@@ -111,16 +101,11 @@ If you like Smint, or have suggestions on how it could be improved, send me a tw
 			//Fill the menu
 			var id = this.id,
 				matchingSection = $("."+id),
-				sectionTop = matchingSection.position().top,
-				hash = null;
-			if($(this).attr("href").indexOf('#') >= 0) {
-				hash = $(this).attr("href").substr($(this).attr("href").indexOf('#') + 1);
-			}
+				sectionTop = matchingSection.position().top;
 			optionLocs.push({
 				top: sectionTop - menuHeight,
 				bottom: parseInt(matchingSection.height() * 0.9) + sectionTop - menuHeight, //Added so that if he is scrolling down and has reached 90% of the section.
-				id: id,
-				hash: hash
+				id: id
 			});
 
 			// if the link has the smint-disable class it will be ignored 
